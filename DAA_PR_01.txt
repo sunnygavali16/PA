@@ -1,0 +1,55 @@
+﻿Recursive 
+
+import java.util.*;
+public class Fibonanci{
+    public static int fib(int n){
+        
+        if(n<=1){
+            return n;
+        }
+        
+        int fm1 = fib(n-1);
+        int fm2 = fib(n-2);
+        
+        int res = fm1 + fm2;
+        
+        return res;
+    }
+	public static void main(String[] args) {
+	Scanner sc=new Scanner(System.in);
+       System.out.println("Enter the n");
+       int n=sc.nextInt();
+		
+		for(int i=0; i<n; i++){
+		    System.out.print(fib(i));
+		}
+	}
+}
+
+Output
+Enter the n
+9
+01123581321
+
+Non Recursive
+
+import java.util.*; 
+public class FIbonanci {
+   public static void main(String args[]) {
+     Scanner sc=new Scanner(System.in);
+       System.out.println("Enter the n");
+       int n=sc.nextInt();
+       int n1 = 0, n2 = 1, n3, i;
+       System.out.print(n1 + " " + n2);
+       for (i = 2; i < n; ++i) {
+          n3 = n1 + n2;
+          System.out.print(" " + n3);
+          n1 = n2;
+          n2 = n3;
+       }
+    }
+ }
+
+output
+6
+0 1 1 2 3 5

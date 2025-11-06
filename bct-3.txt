@@ -1,0 +1,19 @@
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract B{
+    mapping(address=>uint256)b;
+
+function d(uint256 a)public {
+    require(a>=0,"a must be greather than zero");
+    b[msg.sender]=b[msg.sender]+a;
+}
+function w(uint256 a)public {
+    require(a>=0,"a must be greather than zero");
+    b[msg.sender]=b[msg.sender]-a;
+}
+function showb()public view returns(uint256) {
+    return b[msg.sender];
+
+}
+}
