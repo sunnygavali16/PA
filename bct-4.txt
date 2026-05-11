@@ -1,30 +1,65 @@
-// SPDX-License-Identifier: MIT 
-pragma solidity >=0.7.0; 
- 
-contract StudentManagement { 
- 
-    struct Student { 
-        int stud_id; 
-        string name; 
-        string department; 
-    } 
- 
-    Student[] private students; 
- 
-    function addStudent(int stud_id, string memory name, string memory department) public { 
-        students.push(Student(stud_id, name, department)); 
-    } 
- 
-    function getStudent(int stud_id) public view returns (string memory name, string memory department) { 
-        for (uint i = 0; i < students.length; i++) { 
-            if (students[i].stud_id == stud_id) { 
-                return (students[i].name, students[i].department); 
-            } 
-        } 
-        return ("Name Not Found", "Department Not Found"); 
-    } 
- 
-    // Fallback function — triggered when a transaction is sent to the contract with no matching function fallback() external payable { 
-        students.push(Student(7, "XYZ", "Mechanical")); 
-    } 
-} 
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract StudentManagement {
+
+    // Structure of Student
+    struct Student {
+        int stud_id;
+        string name;
+        string department;
+    }
+
+    // Array to store students
+    Student[] private students;
+
+    // Function to add student
+    function addStudent(int stud_id, string memory name,  string memory department) public {
+        // Check if student ID already exists
+        for (uint i = 0; i < students.length; i++) {
+            if (students[i].stud_id == stud_id) {
+             revert("Student with this ID already exists!");
+            }
+        }
+
+        // Add new student
+        students.push( Student(stud_id, name, department) );
+    }
+
+    // Function to display all students
+    function displayAllStudents() public view returns (Student[] memory)
+    {
+        return students;
+    }
+
+    // Function to get student details by ID
+    function getStudent(int stud_id) public view returns ( string memory name, string memory department  )
+    {
+        for (uint i = 0; i < students.length; i++) {
+
+            if (students[i].stud_id == stud_id) {
+
+                return (
+                    students[i].name,
+                    students[i].department
+                );
+            }
+        }
+
+        return ( "Name Not Found", "Department Not Found"  );
+    }
+
+    // Receive Function
+    receive() external payable {
+
+    }
+
+    // Fallback Function
+    fallback() external payable {
+
+        // Add default student when unknown function is called
+        students.push(
+            Student(333, "xyz", "IT")
+        );
+    }
+}
