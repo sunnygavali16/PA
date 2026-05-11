@@ -1,0 +1,79 @@
+import java.util.*;
+
+class Item {
+    int profit, weight;
+
+    // Constructor
+    Item(int profit, int weight) {
+        this.profit = profit;
+        this.weight = weight;
+    }
+}
+
+public class FractionalKnapsack {
+
+    static double fractionalKnapsack(int W, List<Item> items) {
+
+        // Sort items according to profit/weight ratio
+        items.sort((a, b) -> Double.compare(
+                (double) b.profit / b.weight,
+                (double) a.profit / a.weight));
+
+        double totalProfit = 0.0;
+        int currWeight = 0;
+
+        // Traverse all items
+        for (Item item : items) {
+
+            // If item can be added completely
+            if (currWeight + item.weight <= W) {
+
+                currWeight += item.weight;
+                totalProfit += item.profit;
+
+            } else {
+
+                // Add fractional part
+                int remain = W - currWeight;
+
+                totalProfit += item.profit *
+                        ((double) remain / item.weight);
+
+                break;
+            }
+        }
+
+        return totalProfit;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        // Input number of items
+        System.out.print("Enter number of items: ");
+        int n = sc.nextInt();
+
+        List<Item> items = new ArrayList<>();
+
+        // Input profit and weight
+        System.out.println("Enter profit and weight of each item:");
+
+        for (int i = 0; i < n; i++) {
+
+            int profit = sc.nextInt();
+            int weight = sc.nextInt();
+
+            items.add(new Item(profit, weight));
+        }
+
+        System.out.print("Enter knapsack capacity: ");
+        int W = sc.nextInt();
+
+        double maxProfit = fractionalKnapsack(W, items);
+
+        System.out.println("Maximum profit in Knapsack = " + maxProfit);
+
+        sc.close();
+    }
+}
