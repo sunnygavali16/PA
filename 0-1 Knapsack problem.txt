@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+public class Knapsack {
+
+    // Function to find maximum profit
+    static int knapSack(int W, int[] wt, int[] val, int n) {
+
+        int[] dp = new int[W + 1];
+
+        // Knapsack logic
+        for (int i = 0; i < n; i++) {
+
+            for (int w = W; w >= wt[i]; w--) {
+
+                dp[w] = Math.max(dp[w],
+                        dp[w - wt[i]] + val[i]);
+            }
+        }
+
+        return dp[W];
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        // Input number of items
+        System.out.print("Enter number of items: ");
+        int n = sc.nextInt();
+
+        int[] val = new int[n];
+        int[] wt = new int[n];
+
+        // Input value and weight
+        System.out.println("Enter value and weight of each item:");
+
+        for (int i = 0; i < n; i++) {
+
+            val[i] = sc.nextInt();
+            wt[i] = sc.nextInt();
+        }
+
+        System.out.print("Enter knapsack capacity: ");
+        int W = sc.nextInt();
+
+        int result = knapSack(W, wt, val, n);
+
+        System.out.println("Maximum value in Knapsack = " + result);
+
+        sc.close();
+    }
+}
